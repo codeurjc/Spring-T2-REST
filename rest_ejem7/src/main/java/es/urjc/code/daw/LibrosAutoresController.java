@@ -5,9 +5,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -47,13 +46,13 @@ public class LibrosAutoresController {
 	}
 
 	@JsonView(Libro.Basico.class)
-	@RequestMapping(value = "/libros", method = RequestMethod.GET)
+	@GetMapping(value = "/libros")
 	public List<Libro> getLibros() {
 		return libros;
 	}
 
 	@JsonView(Autor.Basico.class)
-	@RequestMapping(value = "/autores", method = RequestMethod.GET)
+	@GetMapping(value = "/autores")
 	public List<Autor> getAutores() {
 		return autores;
 	}
@@ -62,7 +61,7 @@ public class LibrosAutoresController {
 	}
 
 	@JsonView(LibroDetalle.class)
-	@RequestMapping(value = "/libros/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/libros/{id}")
 	public Libro getLibro(@PathVariable int id) {
 		return libros.get(id);
 	}
@@ -71,7 +70,7 @@ public class LibrosAutoresController {
 	}
 
 	@JsonView(AutorDetalle.class)
-	@RequestMapping(value = "/autores/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/autores/{id}")
 	public Autor getAutor(@PathVariable int id) {
 		return autores.get(id);
 	}

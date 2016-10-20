@@ -7,10 +7,13 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,12 +24,12 @@ public class ItemsController {
 	private Map<Long, Item> items = new ConcurrentHashMap<>();
 	private AtomicLong lastId = new AtomicLong();
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@GetMapping(value = "/")
 	public Collection<Item> items() {
 		return items.values();
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.POST)
+	@PostMapping(value = "/")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Item nuevoItem(@RequestBody Item item) {
 
@@ -37,7 +40,7 @@ public class ItemsController {
 		return item;
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+	@PutMapping(value = "/{id}")
 	public ResponseEntity<Item> actulizaItem(@PathVariable long id, @RequestBody Item itemActualizado) {
 
 		Item item = items.get(id);
@@ -53,7 +56,7 @@ public class ItemsController {
 		}
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/{id}")
 	public ResponseEntity<Item> getItem(@PathVariable long id) {
 
 		Item item = items.get(id);
@@ -65,7 +68,7 @@ public class ItemsController {
 		}
 	}
 
-	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/{id}")
 	public ResponseEntity<Item> borraItem(@PathVariable long id) {
 
 		Item item = items.remove(id);

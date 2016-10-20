@@ -5,9 +5,8 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -44,22 +43,22 @@ public class LibrosAutoresController {
 
 	}
 
-	@RequestMapping(value = "/libros", method = RequestMethod.GET)
+	@GetMapping(value = "/libros")
 	public List<Libro> getLibros() {
 		return libros;
 	}
 
-	@RequestMapping(value = "/autores", method = RequestMethod.GET)
+	@GetMapping(value = "/autores")
 	public List<Autor> getAutores() {
 		return autores;
 	}
 
-	@RequestMapping(value = "/libros/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/libros/{id}")
 	public Libro getLibro(@PathVariable int id) {
 		return libros.get(id);
 	}
 
-	@RequestMapping(value = "/autores/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/autores/{id}")
 	public Autor getAutores(@PathVariable int id) {
 		return autores.get(id);
 	}

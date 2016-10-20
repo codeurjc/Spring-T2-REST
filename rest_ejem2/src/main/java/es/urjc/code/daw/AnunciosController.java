@@ -7,10 +7,12 @@ import java.util.concurrent.atomic.AtomicLong;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,12 +22,12 @@ public class AnunciosController {
 	private Map<Long, Anuncio> anuncios = new ConcurrentHashMap<>();
 	private AtomicLong lastId = new AtomicLong();
 
-	@RequestMapping(value = "/anuncios/", method = RequestMethod.GET)
+	@GetMapping(value = "/anuncios/")
 	public Collection<Anuncio> anuncios() {
 		return anuncios.values();
 	}
 
-	@RequestMapping(value = "/anuncios/", method = RequestMethod.POST)
+	@PostMapping(value = "/anuncios/")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Anuncio nuevoAnuncio(@RequestBody Anuncio anuncio) {
 
@@ -36,7 +38,7 @@ public class AnunciosController {
 		return anuncio;
 	}
 
-	@RequestMapping(value = "/anuncios/{id}", method = RequestMethod.PUT)
+	@PutMapping(value = "/anuncios/{id}")
 	public ResponseEntity<Anuncio> actulizaAnuncio(@PathVariable long id, @RequestBody Anuncio anuncioActualizado) {
 
 		Anuncio anuncio = anuncios.get(id);
@@ -52,7 +54,7 @@ public class AnunciosController {
 		}
 	}
 
-	@RequestMapping(value = "/anuncios/{id}", method = RequestMethod.GET)
+	@GetMapping(value = "/anuncios/{id}")
 	public ResponseEntity<Anuncio> getAnuncio(@PathVariable long id) {
 
 		Anuncio anuncio = anuncios.get(id);
@@ -64,7 +66,7 @@ public class AnunciosController {
 		}
 	}
 
-	@RequestMapping(value = "/anuncios/{id}", method = RequestMethod.DELETE)
+	@DeleteMapping(value = "/anuncios/{id}")
 	public ResponseEntity<Anuncio> borraAnuncio(@PathVariable long id) {
 
 		Anuncio anuncio = anuncios.remove(id);

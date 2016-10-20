@@ -1,4 +1,4 @@
-package com.escuelait.spring.rest;
+package es.urjc.code.rest;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
@@ -9,7 +9,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -24,7 +24,7 @@ public class FlickrController {
 	//Please use your own Flickr API Key. This is a fake API key
 	private static final String FLICKR_API_KEY = "XXXXXX";
 
-	@RequestMapping("flickr_search")
+	@GetMapping("flickr_search")
 	public String flickrSearch(Model model, @RequestParam String search) throws UnsupportedEncodingException, RestClientException, URISyntaxException { 
 		
 		String url = "https://api.flickr.com/services/rest/"+
