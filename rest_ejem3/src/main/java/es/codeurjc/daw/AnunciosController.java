@@ -23,6 +23,15 @@ public class AnunciosController {
 
 	private Map<Long, Anuncio> anuncios = new ConcurrentHashMap<>();
 	private AtomicLong lastId = new AtomicLong();
+	
+	public AnunciosController() {
+		Anuncio a1 = new Anuncio("Pepe", "Hola caracola", "XXXX");
+		a1.setId(1);
+		Anuncio a2 = new Anuncio("Juan", "Hola caracola", "XXXX");
+		a2.setId(2);
+		anuncios.put(a1.getId(),a1);
+		anuncios.put(a2.getId(),a2);
+	}
 
 	@GetMapping("/")
 	public Collection<Anuncio> anuncios() {
@@ -41,7 +50,8 @@ public class AnunciosController {
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Anuncio> actulizaAnuncio(@PathVariable long id, @RequestBody Anuncio anuncioActualizado) {
+	public ResponseEntity<Anuncio> actulizaAnuncio(@PathVariable long id, 
+			@RequestBody Anuncio anuncioActualizado) {
 
 		Anuncio anuncio = anuncios.get(id);
 
