@@ -26,9 +26,9 @@ public class AnunciosController {
 	
 	public AnunciosController() {
 		Anuncio a1 = new Anuncio("Pepe", "Hola caracola", "XXXX");
-		a1.setId(1);
+		a1.setId(lastId.incrementAndGet());
 		Anuncio a2 = new Anuncio("Juan", "Hola caracola", "XXXX");
-		a2.setId(2);
+		a2.setId(lastId.incrementAndGet());
 		anuncios.put(a1.getId(),a1);
 		anuncios.put(a2.getId(),a2);
 	}
