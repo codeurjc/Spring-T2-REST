@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<rest_ejem1>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "es.codeurjc.daw.Application",
+            "projectName": "rest_ejem1",
+            "args": ""
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-Application<rest_ejem2>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "console": "internalConsole",
+            "mainClass": "es.codeurjc.daw.Application",
+            "projectName": "rest_ejem2",
+            "args": ""
+        }
+    ]
+}

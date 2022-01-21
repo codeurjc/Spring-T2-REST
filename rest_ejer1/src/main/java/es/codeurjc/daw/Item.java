@@ -1,12 +1,25 @@
 package es.codeurjc.daw;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Item {
 
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id = -1;
+	
 	private String description;
 	private boolean checked;
 
-	public Item() {
+	public Item() {}
+	
+	public Item(String description, boolean checked) {
+		this.description = description;
+		this.checked = checked;
 	}
 
 	public long getId() {

@@ -47,10 +47,10 @@ public class AnunciosController {
 
 			anuncioActualizado.setId(id);
 			anuncios.put(id, anuncioActualizado);
-
-			return new ResponseEntity<>(anuncioActualizado, HttpStatus.OK);
+			
+			return ResponseEntity.ok(anuncioActualizado);
 		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return (ResponseEntity<Anuncio>) ResponseEntity.notFound();
 		}
 	}
 
@@ -60,9 +60,9 @@ public class AnunciosController {
 		Anuncio anuncio = anuncios.get(id);
 
 		if (anuncio != null) {
-			return new ResponseEntity<>(anuncio, HttpStatus.OK);
+			return ResponseEntity.ok(anuncio);
 		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return (ResponseEntity<Anuncio>) ResponseEntity.notFound();
 		}
 	}
 
@@ -72,9 +72,9 @@ public class AnunciosController {
 		Anuncio anuncio = anuncios.remove(id);
 
 		if (anuncio != null) {
-			return new ResponseEntity<>(anuncio, HttpStatus.OK);
+			return ResponseEntity.ok(anuncio);
 		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+			return (ResponseEntity<Anuncio>) ResponseEntity.notFound();
 		}
 	}
 

@@ -1,12 +1,11 @@
 package es.codeurjc.daw;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.atomic.AtomicLong;
+import javax.annotation.PostConstruct;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,63 +20,61 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/items")
 public class ItemsController {
 
-	private Map<Long, Item> items = new ConcurrentHashMap<>();
-	private AtomicLong lastId = new AtomicLong();
-
+	@Autowired
+	private ItemRepository repository;
+	
+	@PostConstruct
+	public void init() {
+		repository.save(new Item("leche", false)); 
+		repository.save(new Item("pan", false)); 
+		repository.save(new Item("pescado", false)); 
+		repository.save(new Item("fruta", true)); 
+		repository.save(new Item("cereales", false)); 
+		repository.save(new Item("pasta", false)); 
+		repository.save(new Item("queso", false)); 
+		repository.save(new Item("jamón", false)); 
+	}
+	
 	@GetMapping("/")
-	public Collection<Item> items() {
-		return items.values();
+	public Page<Item> items(Pageable page) {
+		return repository.findAll(page);
 	}
 
 	@PostMapping("/")
 	@ResponseStatus(HttpStatus.CREATED)
 	public Item nuevoItem(@RequestBody Item item) {
 
-		long id = lastId.incrementAndGet();
-		item.setId(id);
-		items.put(id, item);
+		Item itemActualizado = repository.save(item);
 
-		return item;
+		return itemActualizado;
 	}
 
 	@PutMapping("/{id}")
-	public ResponseEntity<Item> actulizaItem(@PathVariable long id, @RequestBody Item itemActualizado) {
+	public Item actualizaItem(@PathVariable long id, @RequestBody Item itemActualizado) {
 
-		Item item = items.get(id);
-
-		if (item != null) {
-
-			itemActualizado.setId(id);
-			items.put(id, itemActualizado);
-
-			return new ResponseEntity<>(itemActualizado, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		Item item = repository.findById(id).get();
+		item.setChecked(itemActualizado.getChecked());
+		item.setDescription(itemActualizado.getDescription());
+		
+		itemActualizado = repository.save(item);
+		
+		return itemActualizado;
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Item> getItem(@PathVariable long id) {
+	public Item getItem(@PathVariable long id) {
 
-		Item item = items.get(id);
-
-		if (item != null) {
-			return new ResponseEntity<>(item, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
+		Item item = repository.findById(id).get();
+		return item;
+		
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Item> borraItem(@PathVariable long id) {
+	public void borraItem(@PathVariable long id) {
 
-		Item item = items.remove(id);
+		repository.findById(id).get();
+		repository.deleteById(id);
 
-		if (item != null) {
-			return new ResponseEntity<>(item, HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
 	}
 
 }
